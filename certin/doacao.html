@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doação — AdotaPet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff6b35;
+      --primary-dark: #e85d2a;
+      --bg: #0f0f0f;
+      --bg2: #1a1a1a;
+      --bg3: #242424;
+      --text: #f0f0f0;
+      --text-muted: #aaa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+    /* HEADER */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: rgba(15,15,15,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .btn-voltar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-muted);
+      padding: 9px 18px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .btn-voltar:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+
+    /* HERO DA PÁGINA */
+    .doacao-hero {
+      text-align: center;
+      padding: 72px 40px 48px;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,107,53,0.1) 0%, transparent 70%);
+    }
+
+    .doacao-hero .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,107,53,0.1);
+      border: 1px solid rgba(255,107,53,0.3);
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 7px 18px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+
+    .doacao-hero h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .doacao-hero h1 span { color: var(--primary); }
+
+    .doacao-hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* IMPACTO */
+    .impacto {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 0 40px 64px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .impacto-item {
+      flex: 1;
+      min-width: 180px;
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .impacto-item .icon { font-size: 2rem; margin-bottom: 10px; }
+    .impacto-item strong { display: block; font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+    .impacto-item span { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ÁREA PRINCIPAL */
+    .doacao-main {
+      max-width: 960px;
+      margin: 0 auto 80px;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* CARD VALORES */
+    .valores-card {
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 32px;
+      position: sticky;
+      top: 90px;
+    }
+
+    .valores-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .valor-opcoes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .valor-btn {
+      padding: 14px;
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .valor-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+    .valor-btn.active {
+      background: rgba(255,107,53,0.12);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .valor-btn small {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 400;
+      color: inherit;
+      opacity: 0.7;
+      margin-top: 3px;
+    }
+
+    .valor-custom {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      transition: border-color 0.3s;
+    }
+
+    .valor-custom:focus-within { border-color: var(--primary); }
+
+    .valor-custom span {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .valor-custom input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      width: 100%;
+    }
+
+    .valor-custom input::placeholder { color: rgba(255,255,255,0.2); }
+
+    .destino-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .destino-opcoes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .destino-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: left;
+    }
+
+    .destino-btn:hover { border-color: var(--primary); color: var(--text); }
+    .destino-btn.active { border-color: var(--primary); color: var(--text); background: rgba(255,107,53,0.08); }
+    .destino-btn .dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      flex-shrink: 0; transition: all 0.3s;
+    }
+    .destino-btn.active .dot { background: var(--primary); border-color: var(--primary); }
+
+    /* FORM DOAÇÃO */
+    .form-doacao {
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 36px;
+    }
+
+    .form-doacao h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .form-doacao > p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 28px;
+    }
+
+    .resumo-doacao {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,107,53,0.08);
+      border: 1px solid rgba(255,107,53,0.2);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+    }
+
+    .resumo-doacao span { font-size: 0.82rem; color: var(--text-muted); }
+    .resumo-doacao strong { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .form-group input, .form-group select {
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+    .form-group select option { background: var(--bg3); }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .pagamento-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .tab-btn.active { background: rgba(255,107,53,0.1); border-color: var(--primary); color: var(--primary); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .pix-box {
+      text-align: center;
+      padding: 28px 20px;
+      background: var(--bg3);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .pix-qr {
+      width: 140px;
+      height: 140px;
+      background: white;
+      border-radius: 12px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #333;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .pix-key {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-top: 12px;
+    }
+
+    .pix-key span {
+      flex: 1;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    .btn-copiar {
+      background: var(--primary);
+      border: none;
+      color: white;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-copiar:hover { background: var(--primary-dark); }
+
+    .btn-doar {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      border: none;
+      color: white;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(255,107,53,0.4);
+      margin-top: 24px;
+    }
+
+    .btn-doar:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(255,107,53,0.5);
+    }
+
+    .seguro-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* SUCESSO */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .success-screen.active { display: block; }
+    .success-icon { font-size: 5rem; margin-bottom: 20px; animation: bounce 0.6s ease; }
+
+    @keyframes bounce {
+      0% { transform: scale(0); }
+      60% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .success-screen h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+    .success-screen p { color: var(--text-muted); line-height: 1.8; margin-bottom: 28px; }
+    .success-screen a {
+      display: inline-block;
+      padding: 13px 32px;
+      background: var(--primary);
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+    .success-screen a:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+    @media (max-width: 768px) {
+      .doacao-main { grid-template-columns: 1fr; padding: 0 20px; }
+      .valores-card { position: static; }
+      .doacao-hero { padding: 48px 20px 32px; }
+      .doacao-hero h1 { font-size: 2rem; }
+      .impacto { padding: 0 20px 48px; }
+      header { padding: 16px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">🐾 AdotaPet</a>
+  <a class="btn-voltar" href="index.html">← Voltar</a>
+</header>
+
+<!-- HERO -->
+<div class="doacao-hero">
+  <div class="badge">💛 Faça a diferença</div>
+  <h1>Sua doação salva <span>vidas</span></h1>
+  <p>Cada real contribui para ração, vacinas, castração e cuidados veterinários dos animais que aguardam um lar.</p>
+</div>
+
+<!-- IMPACTO -->
+<div class="impacto">
+  <div class="impacto-item">
+    <div class="icon">🍖</div>
+    <strong>R$ 20</strong>
+    <span>alimenta 1 animal por 1 semana</span>
+  </div>
+  <div class="impacto-item">
+    <div class="icon">💉</div>
+    <strong>R$ 50</strong>
+    <span>cobre 1 dose de vacina</span>
+  </div>
+  <div class="impacto-item">
+    <div class="icon">🩺</div>
+    <strong>R$ 100</strong>
+    <span>paga uma consulta veterinária</span>
+  </div>
+  <div class="impacto-item">
+    <div class="icon">✂️</div>
+    <strong>R$ 200</strong>
+    <span>financia uma castração</span>
+  </div>
+</div>
+
+<!-- ÁREA PRINCIPAL -->
+<div class="doacao-main">
+
+  <!-- VALORES -->
+  <div class="valores-card">
+    <h3>Escolha o valor</h3>
+    <div class="valor-opcoes">
+      <button class="valor-btn" onclick="selecionarValor(20, this)">R$ 20<small>ração semanal</small></button>
+      <button class="valor-btn active" onclick="selecionarValor(50, this)">R$ 50<small>1 vacina</small></button>
+      <button class="valor-btn" onclick="selecionarValor(100, this)">R$ 100<small>consulta vet.</small></button>
+      <button class="valor-btn" onclick="selecionarValor(200, this)">R$ 200<small>castração</small></button>
+    </div>
+    <div class="valor-custom">
+      <span>R$</span>
+      <input type="number" id="valorCustom" placeholder="outro valor" min="5" oninput="valorPersonalizado()">
+    </div>
+
+    <div class="destino-label">Destinar para</div>
+    <div class="destino-opcoes">
+      <button class="destino-btn active" onclick="selecionarDestino(this)">
+        <div class="dot"></div> Onde for mais necessário
+      </button>
+      <button class="destino-btn" onclick="selecionarDestino(this)">
+        <div class="dot"></div> Alimentação e ração
+      </button>
+      <button class="destino-btn" onclick="selecionarDestino(this)">
+        <div class="dot"></div> Vacinas e saúde
+      </button>
+      <button class="destino-btn" onclick="selecionarDestino(this)">
+        <div class="dot"></div> Castração
+      </button>
+    </div>
+  </div>
+
+  <!-- FORMULÁRIO -->
+  <div class="form-doacao" id="formDoacao">
+    <h3>Seus dados</h3>
+    <p>Enviaremos uma confirmação da sua doação por e-mail.</p>
+
+    <div class="resumo-doacao">
+      <span>Valor da doação</span>
+      <strong id="resumoValor">R$ 50,00</strong>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nome completo *</label>
+        <input type="text" id="dNome" placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label>E-mail *</label>
+        <input type="email" id="dEmail" placeholder="seu@email.com">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>CPF (opcional)</label>
+      <input type="text" id="dCpf" placeholder="000.000.000-00" maxlength="14">
+    </div>
+
+    <div style="margin-bottom:8px">
+      <div class="destino-label">Forma de pagamento</div>
+      <div class="pagamento-tabs">
+        <button class="tab-btn active" onclick="trocarTab('pix', this)">🟡 PIX</button>
+        <button class="tab-btn" onclick="trocarTab('cartao', this)">💳 Cartão</button>
+        <button class="tab-btn" onclick="trocarTab('boleto', this)">📄 Boleto</button>
+      </div>
+    </div>
+
+    <!-- PIX -->
+    <div class="tab-content active" id="tab-pix">
+      <div class="pix-box">
+        <div class="pix-qr">QR Code<br>PIX<br>🐾</div>
+        <p style="font-size:0.82rem;color:#aaa;margin-bottom:0">Escaneie com o app do seu banco</p>
+        <div class="pix-key">
+          <span id="pixKeyText">adotapet@email.com.br</span>
+          <button class="btn-copiar" onclick="copiarPix()">Copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTÃO -->
+    <div class="tab-content" id="tab-cartao">
+      <div class="form-group">
+        <label>Número do cartão *</label>
+        <input type="text" id="dCartao" placeholder="0000 0000 0000 0000" maxlength="19">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Validade *</label>
+          <input type="text" id="dValidade" placeholder="MM/AA" maxlength="5">
+        </div>
+        <div class="form-group">
+          <label>CVV *</label>
+          <input type="text" id="dCvv" placeholder="123" maxlength="3">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Nome no cartão *</label>
+        <input type="text" id="dNomeCartao" placeholder="Como está no cartão">
+      </div>
+    </div>
+
+    <!-- BOLETO -->
+    <div class="tab-content" id="tab-boleto">
+      <div class="pix-box">
+        <div style="font-size:2.5rem;margin-bottom:12px">📄</div>
+        <p style="font-size:0.85rem;color:#aaa;line-height:1.7">O boleto será gerado após confirmar seus dados.<br>Prazo de vencimento: <strong style="color:#f0f0f0">3 dias úteis</strong>.</p>
+      </div>
+    </div>
+
+    <button class="btn-doar" onclick="confirmarDoacao()">Confirmar doação ❤️</button>
+    <div class="seguro-badge">🔒 Pagamento 100% seguro</div>
+
+    <!-- SUCESSO -->
+    <div class="success-screen" id="successDoacao">
+      <div class="success-icon">💛</div>
+      <h2>Obrigado pela doação!</h2>
+      <p>Você acaba de mudar a vida de um animal. Enviaremos a confirmação no seu e-mail em breve. 🐾</p>
+      <a href="index.html">Voltar ao início</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  let valorAtual = 50;
+  let tabAtual = 'pix';
+
+  function selecionarValor(v, btn) {
+    valorAtual = v;
+    document.querySelectorAll('.valor-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('valorCustom').value = '';
+    atualizarResumo();
+  }
+
+  function valorPersonalizado() {
+    const v = parseFloat(document.getElementById('valorCustom').value);
+    if (v > 0) {
+      valorAtual = v;
+      document.querySelectorAll('.valor-btn').forEach(b => b.classList.remove('active'));
+      atualizarResumo();
+    }
+  }
+
+  function atualizarResumo() {
+    document.getElementById('resumoValor').innerText = `R$ ${valorAtual.toFixed(2).replace('.', ',')}`;
+  }
+
+  function selecionarDestino(btn) {
+    document.querySelectorAll('.destino-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function trocarTab(tab, btn) {
+    tabAtual = tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.getElementById(`tab-${tab}`).classList.add('active');
+  }
+
+  function copiarPix() {
+    navigator.clipboard.writeText('adotapet@email.com.br');
+    const btn = document.querySelector('.btn-copiar');
+    btn.innerText = 'Copiado!';
+    setTimeout(() => btn.innerText = 'Copiar', 2000);
+  }
+
+  // Máscara CPF
+  document.getElementById('dCpf').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    v = v.replace(/(\d{3})(\d)/, '$1.$2')
+         .replace(/(\d{3})(\d)/, '$1.$2')
+         .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    e.target.value = v;
+  });
+
+  // Máscara cartão
+  document.getElementById('dCartao').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 16);
+    v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+    e.target.value = v;
+  });
+
+  // Máscara validade
+  document.getElementById('dValidade').addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 4);
+    if (v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+    e.target.value = v;
+  });
+
+  function confirmarDoacao() {
+    const nome = document.getElementById('dNome').value.trim();
+    const email = document.getElementById('dEmail').value.trim();
+
+    if (!nome) { alert('Informe seu nome!'); document.getElementById('dNome').focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Informe um e-mail válido!'); document.getElementById('dEmail').focus(); return; }
+
+    if (tabAtual === 'cartao') {
+      const cartao = document.getElementById('dCartao').value.replace(/\s/g,'');
+      const validade = document.getElementById('dValidade').value;
+      const cvv = document.getElementById('dCvv').value;
+      const nomeC = document.getElementById('dNomeCartao').value.trim();
+      if (cartao.length < 16 || !validade || cvv.length < 3 || !nomeC) {
+        alert('Preencha todos os dados do cartão!'); return;
+      }
+    }
+
+    // salvar no banco
+    const doacoes = JSON.parse(localStorage.getItem('adotapet_doacoes') || '[]');
+    const novoId = doacoes.length ? Math.max(...doacoes.map(d => d.id)) + 1 : 1;
+    const destinoAtivo = document.querySelector('.destino-btn.active');
+    doacoes.push({
+      id: novoId,
+      data: new Date().toLocaleString('pt-BR'),
+      nome: nome,
+      email: email,
+      cpf: document.getElementById('dCpf').value.trim() || '—',
+      valor: valorAtual,
+      destino: destinoAtivo ? destinoAtivo.innerText.trim() : 'Onde for mais necessário',
+      pagamento: tabAtual
+    });
+    localStorage.setItem('adotapet_doacoes', JSON.stringify(doacoes));
+
+    document.getElementById('formDoacao').querySelector('h3').style.display = 'none';
+    document.getElementById('formDoacao').querySelector('p').style.display = 'none';
+    document.querySelector('.resumo-doacao').style.display = 'none';
+    document.querySelectorAll('.form-group, .form-row, .pagamento-tabs, .tab-content, .btn-doar, .seguro-badge').forEach(el => el.style.display = 'none');
+    document.getElementById('successDoacao').classList.add('active');
+  }
+
+  atualizarResumo();
+</script>
+</body>
+</html>
