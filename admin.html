@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — AdotaPet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff6b35;
+      --primary-dark: #e85d2a;
+      --bg: #0f0f0f;
+      --bg2: #1a1a1a;
+      --bg3: #242424;
+      --text: #f0f0f0;
+      --text-muted: #aaa;
+      --green: #2ecc71;
+      --red: #e74c3c;
+      --yellow: #f5a623;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+    /* ── LOGIN ── */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255,107,53,0.1) 0%, transparent 70%);
+    }
+
+    .login-box {
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 24px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-box .logo { font-size: 2rem; margin-bottom: 8px; }
+    .login-box h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+    .login-box p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 32px; }
+
+    .login-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .login-group label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .login-group input {
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.3s;
+      width: 100%;
+    }
+
+    .login-group input:focus { border-color: var(--primary); }
+
+    .login-error {
+      color: var(--red);
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 13px;
+      background: var(--primary);
+      border: none;
+      color: white;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(255,107,53,0.35);
+      margin-top: 8px;
+    }
+
+    .btn-login:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+    /* ── PAINEL ── */
+    .painel { display: none; }
+
+    .painel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 40px;
+      background: rgba(15,15,15,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .painel-header .logo { font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+    .painel-header .badge-admin {
+      background: rgba(255,107,53,0.1);
+      border: 1px solid rgba(255,107,53,0.3);
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-left: 10px;
+    }
+
+    .header-right { display: flex; align-items: center; gap: 16px; }
+
+    .btn-sair {
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-sair:hover { color: var(--red); border-color: var(--red); }
+
+    .painel-body { padding: 40px; max-width: 1400px; margin: 0 auto; }
+
+    /* STATS */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .stat-box {
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .stat-box .stat-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .stat-box strong { display: block; font-size: 2rem; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 4px; }
+    .stat-box span { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding-bottom: 0;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: -1px;
+    }
+
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* TOOLBAR */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 10px 16px;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .search-input:focus { border-color: var(--primary); }
+
+    .filter-select {
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 10px 14px;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .btn-exportar {
+      background: var(--bg3);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--text-muted);
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-exportar:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* TABELA */
+    .table-wrap {
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    thead tr {
+      background: var(--bg3);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 18px;
+      font-size: 0.85rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .badge-pendente { background: rgba(245,166,35,0.15); color: var(--yellow); }
+    .badge-aprovado { background: rgba(46,204,113,0.15); color: var(--green); }
+    .badge-recusado { background: rgba(231,76,60,0.15); color: var(--red); }
+    .badge-dog { background: rgba(255,107,53,0.1); color: var(--primary); }
+    .badge-cat { background: rgba(130,100,255,0.1); color: #a78bfa; }
+    .badge-pix { background: rgba(46,204,113,0.1); color: var(--green); }
+    .badge-cartao { background: rgba(59,130,246,0.1); color: #60a5fa; }
+    .badge-boleto { background: rgba(245,166,35,0.1); color: var(--yellow); }
+
+    .acoes { display: flex; gap: 8px; }
+
+    .btn-acao {
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-aprovar { background: rgba(46,204,113,0.15); color: var(--green); }
+    .btn-aprovar:hover { background: rgba(46,204,113,0.3); }
+    .btn-recusar { background: rgba(231,76,60,0.1); color: var(--red); }
+    .btn-recusar:hover { background: rgba(231,76,60,0.25); }
+    .btn-ver { background: rgba(255,255,255,0.06); color: var(--text-muted); }
+    .btn-ver:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 0.9rem; }
+
+    /* MODAL DETALHE */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-detalhe {
+      background: var(--bg2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 36px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-detalhe h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; }
+
+    .detalhe-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      gap: 16px;
+    }
+
+    .detalhe-row:last-of-type { border-bottom: none; }
+    .detalhe-row label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }
+    .detalhe-row span { font-size: 0.88rem; text-align: right; }
+
+    .modal-acoes { display: flex; gap: 10px; margin-top: 24px; }
+    .modal-acoes button { flex: 1; padding: 11px; border: none; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+    .modal-fechar { background: var(--bg3); color: var(--text-muted); }
+    .modal-fechar:hover { color: var(--text); }
+
+    @media (max-width: 768px) {
+      .painel-body { padding: 20px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .painel-header { padding: 14px 20px; }
+      table { font-size: 0.78rem; }
+      th, td { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="logo">🐾</div>
+    <h2>AdotaPet Admin</h2>
+    <p>Acesso restrito à equipe administrativa</p>
+    <form onsubmit="event.preventDefault(); fazerLogin();" autocomplete="off">
+    <div class="login-group">
+      <label>Usuário</label>
+      <input type="text" id="adminUser" placeholder="admin" autocomplete="new-password">
+    </div>
+    <div class="login-group">
+      <label>Senha</label>
+      <input type="password" id="adminSenha" placeholder="••••••••" autocomplete="new-password">
+    </div>
+    <div class="login-error" id="loginError">Usuário ou senha incorretos.</div>
+    <button type="submit" class="btn-login">Entrar</button>
+    </form>
+  </div>
+</div>
+
+<!-- PAINEL -->
+<div class="painel" id="painel">
+
+  <div class="painel-header">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="logo">🐾 AdotaPet</span>
+      <span class="badge-admin">ADMIN</span>
+    </div>
+    <div class="header-right">
+      <span style="font-size:0.82rem;color:var(--text-muted)" id="adminNome"></span>
+      <button class="btn-sair" onclick="sair()">Sair</button>
+    </div>
+  </div>
+
+  <div class="painel-body">
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-icon">📋</div>
+        <strong id="statAdocoes">0</strong>
+        <span>Pedidos de adoção</span>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">⏳</div>
+        <strong id="statPendentes">0</strong>
+        <span>Aguardando análise</span>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">✅</div>
+        <strong id="statAprovados">0</strong>
+        <span>Adoções aprovadas</span>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon">💛</div>
+        <strong id="statDoacoes">R$ 0</strong>
+        <span>Total em doações</span>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="trocarTab('adocoes', this)">🐾 Pedidos de Adoção</button>
+      <button class="tab" onclick="trocarTab('doacoes', this)">💛 Doações</button>
+    </div>
+
+    <!-- TAB ADOÇÕES -->
+    <div class="tab-panel active" id="panel-adocoes">
+      <div class="toolbar">
+        <input class="search-input" type="text" placeholder="🔍 Buscar por nome, pet ou e-mail..." oninput="filtrarAdocoes(this.value)">
+        <select class="filter-select" onchange="filtrarStatusAdocoes(this.value)">
+          <option value="">Todos os status</option>
+          <option value="pendente">Pendente</option>
+          <option value="aprovado">Aprovado</option>
+          <option value="recusado">Recusado</option>
+        </select>
+        <button class="btn-exportar" onclick="exportarCSV('adocoes')">⬇ Exportar CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Data</th>
+              <th>Solicitante</th>
+              <th>E-mail</th>
+              <th>Pet</th>
+              <th>Tipo</th>
+              <th>Moradia</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaAdocoes">
+            <tr><td colspan="9"><div class="empty-state"><div class="icon">📭</div><p>Nenhum pedido de adoção ainda.</p></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB DOAÇÕES -->
+    <div class="tab-panel" id="panel-doacoes">
+      <div class="toolbar">
+        <input class="search-input" type="text" placeholder="🔍 Buscar por nome ou e-mail..." oninput="filtrarDoacoes(this.value)">
+        <select class="filter-select" onchange="filtrarPagamento(this.value)">
+          <option value="">Todas as formas</option>
+          <option value="pix">PIX</option>
+          <option value="cartao">Cartão</option>
+          <option value="boleto">Boleto</option>
+        </select>
+        <button class="btn-exportar" onclick="exportarCSV('doacoes')">⬇ Exportar CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Data</th>
+              <th>Doador</th>
+              <th>E-mail</th>
+              <th>Valor</th>
+              <th>Destino</th>
+              <th>Pagamento</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaDoacoes">
+            <tr><td colspan="8"><div class="empty-state"><div class="icon">📭</div><p>Nenhuma doação registrada ainda.</p></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL DETALHE -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-detalhe" id="modalDetalhe">
+    <h3 id="modalTitulo"></h3>
+    <div id="modalConteudo"></div>
+    <div class="modal-acoes">
+      <button class="modal-fechar" onclick="fecharModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── CREDENCIAIS ──
+  const ADMINS = [
+    { user: 'admin', senha: 'adotapet123', nome: 'Administrador' },
+    { user: 'gestor', senha: 'gestor2024', nome: 'Gestor' }
+  ];
+
+  let adocoesData = [];
+  let doacoesData = [];
+  let adocoesFiltradas = [];
+  let doacoesFiltradas = [];
+
+  // ── LOGIN ──
+  function fazerLogin() {
+    const user = document.getElementById('adminUser').value.trim();
+    const senha = document.getElementById('adminSenha').value.trim();
+    const admin = ADMINS.find(a => a.user === user && a.senha === senha);
+    if (!admin) {
+      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('adminSenha').value = '';
+      return;
+    }
+    sessionStorage.setItem('adminLogado', JSON.stringify(admin));
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('painel').style.display = 'block';
+    document.getElementById('adminNome').innerText = admin.nome;
+    carregarDados();
+  }
+
+  function sair() {
+    sessionStorage.removeItem('adminLogado');
+    location.reload();
+  }
+
+  // ── DADOS ──
+  function carregarDados() {
+    adocoesData = JSON.parse(localStorage.getItem('adotapet_adocoes') || '[]');
+    doacoesData = JSON.parse(localStorage.getItem('adotapet_doacoes') || '[]');
+    adocoesFiltradas = [...adocoesData];
+    doacoesFiltradas = [...doacoesData];
+    atualizarStats();
+    renderAdocoes(adocoesFiltradas);
+    renderDoacoes(doacoesFiltradas);
+  }
+
+  function atualizarStats() {
+    document.getElementById('statAdocoes').innerText = adocoesData.length;
+    document.getElementById('statPendentes').innerText = adocoesData.filter(a => a.status === 'pendente').length;
+    document.getElementById('statAprovados').innerText = adocoesData.filter(a => a.status === 'aprovado').length;
+    const totalDoacoes = doacoesData.reduce((s, d) => s + parseFloat(d.valor || 0), 0);
+    document.getElementById('statDoacoes').innerText = `R$ ${totalDoacoes.toFixed(2).replace('.', ',')}`;
+  }
+
+  // ── RENDER ADOÇÕES ──
+  function renderAdocoes(lista) {
+    const tbody = document.getElementById('tabelaAdocoes');
+    if (!lista.length) {
+      tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><div class="icon">📭</div><p>Nenhum pedido encontrado.</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = lista.map((a, i) => `
+      <tr>
+        <td style="color:var(--text-muted);font-size:0.78rem">#${String(a.id).padStart(3,'0')}</td>
+        <td style="color:var(--text-muted);white-space:nowrap">${a.data}</td>
+        <td><strong>${a.nome}</strong><br><span style="font-size:0.75rem;color:var(--text-muted)">${a.telefone}</span></td>
+        <td style="color:var(--text-muted)">${a.email}</td>
+        <td><strong>${a.pet}</strong></td>
+        <td><span class="badge ${a.tipoPet === 'dog' ? 'badge-dog' : 'badge-cat'}">${a.tipoPet === 'dog' ? '🐶 Cachorro' : '🐱 Gato'}</span></td>
+        <td style="color:var(--text-muted)">${a.moradia}</td>
+        <td><span class="badge badge-${a.status}">${a.status}</span></td>
+        <td>
+          <div class="acoes">
+            <button class="btn-acao btn-ver" onclick="verAdocao(${a.id})">Ver</button>
+            ${a.status === 'pendente' ? `
+              <button class="btn-acao btn-aprovar" onclick="mudarStatus(${a.id}, 'aprovado')">✓</button>
+              <button class="btn-acao btn-recusar" onclick="mudarStatus(${a.id}, 'recusado')">✗</button>
+            ` : ''}
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  // ── RENDER DOAÇÕES ──
+  function renderDoacoes(lista) {
+    const tbody = document.getElementById('tabelaDoacoes');
+    if (!lista.length) {
+      tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="icon">📭</div><p>Nenhuma doação encontrada.</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = lista.map(d => `
+      <tr>
+        <td style="color:var(--text-muted);font-size:0.78rem">#${String(d.id).padStart(3,'0')}</td>
+        <td style="color:var(--text-muted);white-space:nowrap">${d.data}</td>
+        <td><strong>${d.nome}</strong></td>
+        <td style="color:var(--text-muted)">${d.email}</td>
+        <td><strong style="color:var(--primary)">R$ ${parseFloat(d.valor).toFixed(2).replace('.', ',')}</strong></td>
+        <td style="color:var(--text-muted)">${d.destino}</td>
+        <td><span class="badge badge-${d.pagamento}">${d.pagamento}</span></td>
+        <td><button class="btn-acao btn-ver" onclick="verDoacao(${d.id})">Ver</button></td>
+      </tr>
+    `).join('');
+  }
+
+  // ── FILTROS ──
+  function filtrarAdocoes(q) {
+    adocoesFiltradas = adocoesData.filter(a =>
+      a.nome.toLowerCase().includes(q.toLowerCase()) ||
+      a.email.toLowerCase().includes(q.toLowerCase()) ||
+      a.pet.toLowerCase().includes(q.toLowerCase())
+    );
+    renderAdocoes(adocoesFiltradas);
+  }
+
+  function filtrarStatusAdocoes(s) {
+    adocoesFiltradas = s ? adocoesData.filter(a => a.status === s) : [...adocoesData];
+    renderAdocoes(adocoesFiltradas);
+  }
+
+  function filtrarDoacoes(q) {
+    doacoesFiltradas = doacoesData.filter(d =>
+      d.nome.toLowerCase().includes(q.toLowerCase()) ||
+      d.email.toLowerCase().includes(q.toLowerCase())
+    );
+    renderDoacoes(doacoesFiltradas);
+  }
+
+  function filtrarPagamento(p) {
+    doacoesFiltradas = p ? doacoesData.filter(d => d.pagamento === p) : [...doacoesData];
+    renderDoacoes(doacoesFiltradas);
+  }
+
+  // ── STATUS ──
+  function mudarStatus(id, status) {
+    const idx = adocoesData.findIndex(a => a.id === id);
+    if (idx === -1) return;
+    adocoesData[idx].status = status;
+    localStorage.setItem('adotapet_adocoes', JSON.stringify(adocoesData));
+    adocoesFiltradas = [...adocoesData];
+    atualizarStats();
+    renderAdocoes(adocoesFiltradas);
+  }
+
+  // ── MODAIS ──
+  function verAdocao(id) {
+    const a = adocoesData.find(x => x.id === id);
+    if (!a) return;
+    document.getElementById('modalTitulo').innerText = `📋 Pedido #${String(a.id).padStart(3,'0')} — ${a.pet}`;
+    document.getElementById('modalConteudo').innerHTML = `
+      ${row('Solicitante', a.nome)}
+      ${row('E-mail', a.email)}
+      ${row('Telefone', a.telefone)}
+      ${row('CPF', a.cpf || '—')}
+      ${row('Nascimento', a.nascimento || '—')}
+      ${row('Pet', a.pet)}
+      ${row('Tipo', a.tipoPet === 'dog' ? '🐶 Cachorro' : '🐱 Gato')}
+      ${row('Moradia', a.moradia)}
+      ${row('Quintal', a.quintal)}
+      ${row('Outros animais', a.outrosAnimais)}
+      ${row('Crianças', a.criancas)}
+      ${a.telas ? row('Telas de proteção', a.telas) : ''}
+      ${row('Endereço', a.endereco)}
+      ${row('Motivo', a.motivo)}
+      ${row('Status', `<span class="badge badge-${a.status}">${a.status}</span>`)}
+      ${row('Data', a.data)}
+    `;
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+
+  function verDoacao(id) {
+    const d = doacoesData.find(x => x.id === id);
+    if (!d) return;
+    document.getElementById('modalTitulo').innerText = `💛 Doação #${String(d.id).padStart(3,'0')}`;
+    document.getElementById('modalConteudo').innerHTML = `
+      ${row('Doador', d.nome)}
+      ${row('E-mail', d.email)}
+      ${row('CPF', d.cpf || '—')}
+      ${row('Valor', `<strong style="color:var(--primary)">R$ ${parseFloat(d.valor).toFixed(2).replace('.', ',')}</strong>`)}
+      ${row('Destino', d.destino)}
+      ${row('Pagamento', d.pagamento)}
+      ${row('Data', d.data)}
+    `;
+    document.getElementById('modalOverlay').classList.add('active');
+  }
+
+  function row(label, value) {
+    return `<div class="detalhe-row"><label>${label}</label><span>${value}</span></div>`;
+  }
+
+  function fecharModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+
+  document.getElementById('modalOverlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modalOverlay')) fecharModal();
+  });
+
+  // ── TABS ──
+  function trocarTab(tab, btn) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(`panel-${tab}`).classList.add('active');
+  }
+
+  // ── EXPORTAR CSV ──
+  function exportarCSV(tipo) {
+    const dados = tipo === 'adocoes' ? adocoesData : doacoesData;
+    if (!dados.length) { alert('Nenhum dado para exportar.'); return; }
+    const headers = Object.keys(dados[0]).join(',');
+    const rows = dados.map(d => Object.values(d).map(v => `"${v}"`).join(','));
+    const csv = [headers, ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `adotapet_${tipo}_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  }
+
+  // ── VERIFICAR SESSÃO ──
+  const sessao = sessionStorage.getItem('adminLogado');
+  if (sessao) {
+    const admin = JSON.parse(sessao);
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('painel').style.display = 'block';
+    document.getElementById('adminNome').innerText = admin.nome;
+    carregarDados();
+  }
+</script>
+</body>
+</html>

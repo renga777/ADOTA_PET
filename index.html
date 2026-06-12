@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdotaPet — Adote amor. Transforme vidas.</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- CURSOR GLOW -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- HEADER -->
+<header id="header">
+  <a class="logo" href="#">🐾 AdotaPet</a>
+  <nav>
+    <a href="#sobre">Sobre</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#pets">Pets</a>
+    <a href="#depoimentos">Histórias</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <div class="header-actions">
+    <button class="btn-header" onclick="scrollToPets()">Adotar agora</button>
+    <div class="header-user" id="headerUser"></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      +1.200 animais encontraram um lar
+    </div>
+    <h1>Adote <span class="gradient-text">amor.</span><br>Transforme <span class="outline-text">vidas.</span></h1>
+    <p>Conectamos você a animais que precisam de um lar com carinho, responsabilidade e muito amor ❤️</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="scrollToPets()">
+        Explorar Pets
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <a href="#sobre" class="btn-ghost">Saiba mais</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><strong>+1.200</strong><span>Adotados</span></div>
+      <div class="hstat-divider"></div>
+      <div class="hstat"><strong>+300</strong><span>Famílias</span></div>
+      <div class="hstat-divider"></div>
+      <div class="hstat"><strong>5★</strong><span>Avaliação</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <div class="hero-mosaic">
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1601979031925-424e53b6caaa?w=400&q=80" alt="cachorro">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1583301286816-f4f05e1e8b25?w=300&q=80" alt="coelho">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1452570053594-1b985d6ea890?w=300&q=80" alt="passarinho">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=300&q=80" alt="gato">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1534773728080-33d31da27ae5?w=300&q=80" alt="cavalo">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=300&q=80" alt="tartaruga">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1529429617124-95b109e86bb8?w=300&q=80" alt="cachorro">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?w=300&q=80" alt="papagaio">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1558788353-f76d92427f16?w=300&q=80" alt="cachorro">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=300&q=80" alt="gato">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=300&q=80" alt="cachorro">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1444464666168-49d633b86797?w=300&q=80" alt="tucano">
+        </div>
+      </div>
+      <div class="hero-img-card card-float-1">🐾 Rex foi adotado!</div>
+      <div class="hero-img-card card-float-2">❤️ 12 adoções hoje</div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="sobre">
+  <div class="sobre-inner">
+    <div class="sobre-img-col">
+      <div class="sobre-img-main">
+        <img src="https://images.unsplash.com/photo-1601758124510-52d02ddb7cbd?w=600&q=80" alt="pessoa com cachorro">
+        <div class="sobre-img-badge">
+          <span class="sobre-badge-dot"></span>
+          Fundado em 2026
+        </div>
+      </div>
+    </div>
+    <div class="sobre-text">
+      <div class="section-label">Quem somos</div>
+      <h2>Nascemos para <span>mudar</span> a história dos animais</h2>
+      <p>Nós nos conhecemos na faculdade e compartilhávamos um interesse em comum: o amor pelos animais, especialmente cães e gatos. Durante nossas conversas, percebemos como muitos pets ainda enfrentam dificuldades para encontrar um lar, enquanto muitas pessoas têm interesse em adotar, mas não sabem por onde começar.</p>
+      <p>Foi dessa ideia que nasceu o AdotaPet. Nosso objetivo é utilizar a tecnologia para aproximar animais que precisam de uma família de pessoas dispostas a oferecer amor, cuidado e uma nova oportunidade. Mais do que um site, queremos contribuir para a conscientização sobre a adoção responsável e mostrar como pequenas ações podem transformar vidas.</p>
+      <div class="sobre-tags">
+        <span>🏠 Adoção responsável</span>
+        <span>🩺 Saúde garantida</span>
+        <span>📋 Processo simples</span>
+        <span>💛 Suporte pós-adoção</span>
+      </div>
+      <div class="sobre-stats">
+        <div class="sobre-stat"><strong>+1.200</strong><span>Animais adotados</span></div>
+        <div class="sobre-stat-divider"></div>
+        <div class="sobre-stat"><strong>+300</strong><span>Famílias felizes</span></div>
+        <div class="sobre-stat-divider"></div>
+        <div class="sobre-stat"><strong>50+</strong><span>Abrigos parceiros</span></div>
+      </div>
+      <div class="sobre-vaquinha">
+        <div class="vaquinha-text">
+          <span>💛</span>
+          <div>
+            <strong>Não pode adotar agora?</strong>
+            <p>Sua doação ajuda a pagar ração, vacinas e cuidados veterinários.</p>
+          </div>
+        </div>
+        <a href="doacao.html" class="btn-vaquinha">Fazer doação 🤍</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="como-funciona">
+  <div class="cf-header">
+    <div class="section-label center">Processo</div>
+    <h2 class="section-title center">Como <span>funciona?</span></h2>
+    <p class="section-sub center">Em apenas 3 passos simples você pode mudar a vida de um animal para sempre</p>
+  </div>
+  <div class="steps-row">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-icon-wrap">
+        <div class="step-icon">🔍</div>
+      </div>
+      <div class="step-body">
+        <h3>Explore os pets</h3>
+        <p>Navegue pelos perfis dos animais disponíveis e encontre aquele que combina com você e sua família.</p>
+        <div class="step-tag">Gratuito e fácil</div>
+      </div>
+    </div>
+    <div class="step-connector">
+      <div class="step-connector-line"></div>
+      <div class="step-connector-dot"></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-icon-wrap">
+        <div class="step-icon">📋</div>
+      </div>
+      <div class="step-body">
+        <h3>Preencha o formulário</h3>
+        <p>Informe seus dados e responda algumas perguntas para garantir uma adoção responsável e duradoura.</p>
+        <div class="step-tag">Leva menos de 5 min</div>
+      </div>
+    </div>
+    <div class="step-connector">
+      <div class="step-connector-line"></div>
+      <div class="step-connector-dot"></div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-icon-wrap">
+        <div class="step-icon">❤️</div>
+      </div>
+      <div class="step-body">
+        <h3>Leve para casa</h3>
+        <p>Nossa equipe entra em contato em até 48h e organiza a entrega do seu novo melhor amigo com todo cuidado.</p>
+        <div class="step-tag">Resposta em 48h</div>
+      </div>
+    </div>
+  </div>
+  <div class="cf-bottom">
+    <div class="cf-stat"><strong>+1.200</strong><span>adoções realizadas</span></div>
+    <div class="cf-divider"></div>
+    <div class="cf-stat"><strong>48h</strong><span>tempo médio de resposta</span></div>
+    <div class="cf-divider"></div>
+    <div class="cf-stat"><strong>100%</strong><span>gratuito para adotantes</span></div>
+  </div>
+</section>
+
+<!-- PETS -->
+<section id="pets" class="pets-section">
+  <div class="section-label center">Disponíveis para adoção</div>
+  <h2 class="section-title center">Animais esperando um <span style="color:var(--primary)">lar</span></h2>
+  <p class="section-sub center">Cada um desses animais foi resgatado e precisa de uma família. Será a sua?</p>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filtrar('all', this)">🐾 Todos</button>
+    <button class="filter-btn" onclick="filtrar('dog', this)">🐶 Cachorros</button>
+    <button class="filter-btn" onclick="filtrar('cat', this)">🐱 Gatos</button>
+    <button class="btn-cadastrar" onclick="abrirCadastro()">+ Cadastrar Pet</button>
+  </div>
+
+  <div class="grid" id="petsContainer"></div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos" class="depoimentos">
+  <div class="depo-header">
+    <div class="section-label center">Histórias reais</div>
+    <h2 class="section-title center">Quem adotou, <span>amou</span> ❤️</h2>
+    <p class="section-sub center">Mais de 1.200 famílias já transformaram suas vidas. Veja o que dizem.</p>
+    <div class="depo-rating-bar">
+      <div class="depo-rating-stars">★★★★★</div>
+      <strong>5.0</strong>
+      <span>— Avaliação média de 300+ adotantes</span>
+    </div>
+  </div>
+  <div class="depo-grid">
+    <div class="depo-card">
+      <div class="depo-pet-img">
+        <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400&q=80" alt="Luna">
+        <div class="depo-pet-label">🐱 Luna</div>
+      </div>
+      <div class="depo-quote">❝</div>
+      <p>Adotei a Luna há 6 meses e ela transformou completamente minha vida. O processo foi simples, rápido e a equipe foi incrível do início ao fim!</p>
+      <div class="depo-stars">★★★★★</div>
+      <div class="depo-author">
+        <div class="depo-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80" alt="Maria"></div>
+        <div>
+          <strong>Maria Silva</strong>
+          <span>Adotou a Luna 🐱 · Contagem, MG</span>
+        </div>
+      </div>
+    </div>
+    <div class="depo-card featured">
+      <div class="depo-featured-badge">⭐ Destaque</div>
+      <div class="depo-pet-img">
+        <img src="https://images.unsplash.com/photo-1558788353-f76d92427f16?w=400&q=80" alt="Rex">
+        <div class="depo-pet-label">🐶 Rex</div>
+      </div>
+      <div class="depo-quote">❝</div>
+      <p>O Rex chegou em casa e em uma semana já era o dono do lugar! Recomendo o AdotaPet de olhos fechados. Atendimento impecável e muito carinho.</p>
+      <div class="depo-stars">★★★★★</div>
+      <div class="depo-author">
+        <div class="depo-avatar"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=80" alt="João"></div>
+        <div>
+          <strong>João Pereira</strong>
+          <span>Adotou o Rex 🐶 · Contagem, MG</span>
+        </div>
+      </div>
+    </div>
+    <div class="depo-card">
+      <div class="depo-pet-img">
+        <img src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&q=80" alt="Mia">
+        <div class="depo-pet-label">🐱 Mia</div>
+      </div>
+      <div class="depo-quote">❝</div>
+      <p>Nunca pensei que adotar seria tão fácil. A Mia chegou vacinada, castrada e cheia de energia. Melhor decisão da minha vida, sem dúvida!</p>
+      <div class="depo-stars">★★★★★</div>
+      <div class="depo-author">
+        <div class="depo-avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80" alt="Ana"></div>
+        <div>
+          <strong>Ana Costa</strong>
+          <span>Adotou a Mia 🐱 · Contagem, MG</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="contato">
+  <div class="contato-inner">
+    <div class="contato-text">
+      <div class="section-label">Contato</div>
+      <h2>Vamos conversar?</h2>
+      <p>Tem dúvidas, quer ser um abrigo parceiro ou só quer mandar um oi? Estamos aqui!</p>
+      <div class="contato-links">
+        <a href="mailto:contato@adotapet.com">📧 contato@adotapet.com</a>
+        <a href="#">📱 (31) 99999-0000</a>
+        <a href="#">📍 Contagem, Brasil</a>
+      </div>
+    </div>
+    <div class="contato-cta">
+      <div class="cta-box">
+        <div class="cta-emoji">🐾</div>
+        <h3>Pronto para adotar?</h3>
+        <p>Encontre seu companheiro ideal agora mesmo.</p>
+        <button class="btn-primary" onclick="scrollToPets()">Ver pets disponíveis</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">🐾 AdotaPet</div>
+      <p>Conectando corações desde 2026. Cada adoção é uma vida transformada com responsabilidade e amor.</p>
+      <div class="footer-social">
+        <a href="#">📸</a>
+        <a href="#">🐦</a>
+        <a href="#">💼</a>
+        <a href="#">▶️</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <strong>Navegação</strong>
+      <a href="#sobre">Sobre</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#pets">Pets</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <div class="footer-links">
+      <strong>Legal</strong>
+      <a href="#">Termos de uso</a>
+      <a href="#">Privacidade</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>AdotaPet</span> — Todos os direitos reservados.</p>
+    <div class="footer-badge">🐾 Feito com amor para os animais do Brasil</div>
+    <a href="admin.html" class="footer-admin-link">Painel Admin</a>
+  </div>
+</footer>
+
+<!-- MODAL CADASTRO -->
+<div class="modal" id="modalCadastro">
+  <div class="modal-box">
+    <h3>🐾 Cadastrar Pet</h3>
+    <p>Preencha os dados do animal para adoção</p>
+    <label>Nome</label>
+    <input id="cadNome" placeholder="Ex: Bolinha" />
+    <label>Tipo</label>
+    <select id="cadTipo">
+      <option value="dog">🐶 Cachorro</option>
+      <option value="cat">🐱 Gato</option>
+    </select>
+    <label>Descrição</label>
+    <input id="cadDesc" placeholder="Ex: Brincalhão e carinhoso" />
+    <label>URL da Imagem</label>
+    <input id="cadImg" placeholder="https://..." />
+    <div class="modal-actions">
+      <button class="btn-confirm" onclick="cadastrarPet()">Cadastrar ❤️</button>
+      <button class="btn-cancel" onclick="fecharCadastro()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PET -->
+<div class="modal" id="modal">
+  <div class="modal-box modal-pet">
+    <button class="modal-close" onclick="fecharModal()">✕</button>
+    <img id="modalImg">
+    <div class="modal-pet-info">
+      <div class="modal-pet-tag" id="modalTag"></div>
+      <h3 id="modalNome"></h3>
+      <p id="modalDesc"></p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-confirm" onclick="adotar()">Quero Adotar ❤️</button>
+      <button class="btn-cancel" onclick="fecharModal()">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
